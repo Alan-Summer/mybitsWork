@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.0.99:3306/mp?useSSL=false&ServerTimezone=GMT%2b8&characterEncoding=utf8
+    username: shubole
+    password: Aacookie123@
+logging:
+  level:
+    shubole: warn
+    anle.mybits.demo: trace
+  pattern:
+    console: '%p%m%n'

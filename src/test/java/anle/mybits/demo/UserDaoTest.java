@@ -39,11 +39,41 @@ public class UserDaoTest {
     @Test
     public void selectByWrapper() {
         QueryWrapper<User> query = new QueryWrapper<>();
-        query.like("name","雨").lt("age",40);
+        query.like("name", "雨").lt("age", 40);
 
         List<User> users = userMapper.selectList(query);
         users.forEach(System.out::println);
     }
 
+    /**
+     * 名字中包含雨 并且年龄大于等于20且小于40 并且email不为空
+     */
 
+    @Test
+    public void selectByWrapper2() {
+        QueryWrapper<User> query = new QueryWrapper<>();
+        query.like("name","雨")
+                .between("age",20,40)
+                .isNotNull("email");
+        List<User> users = userMapper.selectList(query);
+        users.forEach(System.out::println);
+    }
+
+
+    /**
+    * 名字为王性 或者年龄大于等于25，按照年龄降序排列，
+     * 年龄相同的按照ID升序排列
+    * **/
+
+    @Test
+    public void selectByWrapper3() {
+        QueryWrapper<User> query = new QueryWrapper<>();
+        query.likeRight("name","王")
+                .or().ge("age",25)
+                .orderByDesc("age")
+                .orderByAsc("id");
+
+        List<User> users = userMapper.selectList(query);
+        users.forEach(System.out::println);
+    }
 }

@@ -143,4 +143,20 @@ public class UserDaoTest {
         List<User> users = userMapper.selectList(query);
         users.forEach(System.out::println);
     }
+
+
+    /**
+     * 二 ，select 不列出全部字段
+     * */
+
+    /**
+     * 1，名字中包含雨并且年龄小于40
+     * */
+    @Test
+    public void selectByWarpperSupper(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id","name").like("name","雨").lt("age",40);
+        List<User> users = userMapper.selectList(queryWrapper);
+        users.forEach(System.out::println);
+    }
 }

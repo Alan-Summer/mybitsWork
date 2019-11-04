@@ -89,4 +89,58 @@ public class UserDaoTest {
         List<User> users = userMapper.selectList(query);
         users.forEach(System.out::println);
     }
+
+    /**
+    *
+    * 名字为王性 并且（年龄小于40或邮箱不为空）
+    * **/
+
+    @Test
+    public void selectByWrapper5() {
+        QueryWrapper<User> query = new QueryWrapper<>();
+        query.likeRight("name","王")
+                .and(q->q.lt("age",40).or().isNotNull("email"));
+        List<User> users = userMapper.selectList(query);
+        users.forEach(System.out::println);
+    }
+
+    /**
+     * 名字为王姓或者（年龄小于40并且年龄大于20 并且邮件不为空）
+     *
+     * */
+
+    @Test
+    public void selectByWrapper6() {
+        QueryWrapper<User> query = new QueryWrapper<>();
+       query.likeRight("name","王")
+               .or(wq->wq.lt("age",40).gt("age",20).isNotNull("email"));
+        List<User> users = userMapper.selectList(query);
+        users.forEach(System.out::println);
+    }
+
+/**
+ * (年龄小于40或邮箱不为空) 并且名字为王姓
+* */
+    @Test
+    public void selectByWrapper7() {
+        QueryWrapper<User> query = new QueryWrapper<>();
+        query.nested(wq->wq.lt("age",40).or().isNotNull("email"))
+                .likeRight("name","王");
+
+        List<User> users = userMapper.selectList(query);
+        users.forEach(System.out::println);
+    }
+
+    /***
+     * 年龄为30 31  34 35
+     *
+     * */
+    @Test
+    public void selectByWrapper8() {
+        QueryWrapper<User> query = new QueryWrapper<>();
+            query.in("age",30,31,34,35);
+
+        List<User> users = userMapper.selectList(query);
+        users.forEach(System.out::println);
+    }
 }

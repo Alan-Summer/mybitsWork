@@ -76,4 +76,17 @@ public class UserDaoTest {
         List<User> users = userMapper.selectList(query);
         users.forEach(System.out::println);
     }
+
+    /**
+     * 创建日期为2019年2月14日 并且直属上级为王姓
+     * */
+
+    @Test
+    public void selectByWrapper4() {
+        QueryWrapper<User> query = new QueryWrapper<>();
+      query.apply("date_format(create_time,'%Y-%m-%d')={0}","2019-02-14")
+              .inSql("manager_id","select id from user where name like '王%'");
+        List<User> users = userMapper.selectList(query);
+        users.forEach(System.out::println);
+    }
 }
